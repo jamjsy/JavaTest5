@@ -1,0 +1,6 @@
+com\hand\service\FilmService.class
+com\hand\controller\FilmRestController.class
+com\hand\Exam1Application.class
+com\hand\dao\FilmDAO.class
+com\hand\service\impl\FilmServiceImpl.class
+com\hand\domain\Film.class

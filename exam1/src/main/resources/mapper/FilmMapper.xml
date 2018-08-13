@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.dao.FilmDAO">
+    <resultMap id="BaseResultMap" type="com.hand.domain.Film">
+        <result column="film_id" property="film_id"/>
+        <result column="last_name" property="last_name"/>
+        <result column="first_name" property="first_name"/>
+    </resultMap>
+    <parameterMap id="Film" type="com.hand.domain.Film"/>
+    <sql id="Base_column_list">
+        film_id, first_name, last_name
+    </sql>
+
+    <select id="findFilmById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_column_list"/>
+        from
+        film
+        where
+        film_id = #{film_id}
+    </select>
+    <!--查询多个-->
+    <select id="findAllFilm" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_column_list"/>
+        from
+        film
+        limit 10
+    </select>
+    <!--添加一个Film-->
+    <insert id="saveFilm" parameterType="com.hand.domain.Film"
+            useGeneratedKeys="true" keyProperty="film_id">
+        insert into
+          film(first_name, last_name)
+        values
+          (#{first_name}, #{last_name})
+    </insert>
+    <!--更新一个Film不能更新id-->
+    <update id="updateActor" parameterType="com.hand.domain.Film">
+        update
+        film
+        set
+        <if test="first_name!=null">
+            first_name = #{first_name},
+        </if>
+        <if test="last_name!=null">
+            last_name = #{last_name}
+        </if>
+        where film_id = #{film_id}
+    </update>
+    <delete id="deleteFilmById" parameterType="java.lang.Integer">
+        delete from
+      film
+        where film_id = #{film_id}
+    </delete>
+
+</mapper>

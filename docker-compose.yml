@@ -1,0 +1,25 @@
+version: "3"
+services:
+  mysql-for-mybatis:
+    container_name: mysql-for-mybatis
+    image: mysql:v1.1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  java-spring-boot:
+    container_name: java-spring-boot
+    image: jdk:v1.1
+    ports:
+          - "8080:8080"
+    depends_on:
+      - mysql-for-mybatis
+    links:
+      - mysql-for-mybatis
+    environment:
+      MYSQL_IP: mysql-for-mybatis
+      MYSQL_PORT: 3306
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: root
+      URL: "jdbc:mysql://192.168.99.100:3306/sakila"
+      D_N: "com.mysql.jdbc.Driver"
